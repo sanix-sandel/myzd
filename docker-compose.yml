@@ -1,9 +1,21 @@
 version: '3'
 
 services:
+#
+#  frontend:
+#    build:
+#      context: .
+#      dockerfile: ./frontapp/Dockerfile
+#    command: npm run serve
+#    ports:
+#      - 8080:8080
+#    depends_on:
+#      - app
 
   db:
-    image: postgres:latest
+    build:
+      context: .
+      dockerfile: ./db/Dockerfile
     restart: unless-stopped
     environment:
       - POSTGRES_USER=user

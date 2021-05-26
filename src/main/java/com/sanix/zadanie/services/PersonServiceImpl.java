@@ -8,6 +8,8 @@ import com.sanix.zadanie.exceptions.PersonNotFoundException;
 import com.sanix.zadanie.models.Person;
 import com.sanix.zadanie.repository.PersonRepository;
 import org.fluttercode.datafactory.impl.DataFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +23,8 @@ import java.util.Optional;
 
 @Service
 public class PersonServiceImpl implements PersonService{
+
+    private static Logger logger= LoggerFactory.getLogger(JavaFaker.class);
 
     private final PersonRepository personRepository;
     private final JavaFaker faker;
@@ -82,11 +86,14 @@ public class PersonServiceImpl implements PersonService{
         }
         Person person=personOptional.get();
         personRepository.delete(person);
+        logger.info(person+" deleted");
+
     }
 
     @Override
     public void deleteAll() {
         personRepository.deleteAll();
+        logger.info("All users deleted");
     }
 
     @Override

@@ -3,8 +3,10 @@ package com.sanix.zadanie.api;
 import com.github.javafaker.Faker;
 import com.sanix.zadanie.models.Person;
 import com.sanix.zadanie.services.PersonService;
+import io.swagger.models.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,11 +25,13 @@ public class UserApi {
 
     @GetMapping("{n}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addUsers(@PathVariable("n") int n){
+    public ResponseEntity addUsers(@PathVariable("n") int n){
         personService.addUsers(n);
+        return new ResponseEntity("Users added successfully", HttpStatus.OK);
     }
 
-    @GetMapping("/getuser/{name}")
+    @GetMapping
+    @RequestMapping("/getuser/{name}")
     @ResponseStatus(HttpStatus.OK)
     public Person getUser(@PathVariable("name") String name){
         return personService.findByName(name);
@@ -48,19 +52,24 @@ public class UserApi {
 
     @DeleteMapping("{Id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteUser(@PathVariable("Id")Long Id){
+    public ResponseEntity deleteUser(@PathVariable("Id")Long Id){
         personService.deleteOne(Id);
+        return new ResponseEntity("User deleted successfully", HttpStatus.OK);
     }
 
     @DeleteMapping("delete/all/")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteAllUsers(){
+    public ResponseEntity deleteAllUsers(){
         personService.deleteAll();
+        return new ResponseEntity("Users deleted", HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{n}")
+    @DeleteMapping
+    @RequestMapping("delete/{n}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteByRange(@PathVariable("id")int n){
+    public ResponseEntity deleteByRange(@PathVariable("n")int n){
+
         personService.deleteByRange(n);
+        return new ResponseEntity("User deleted successfully", HttpStatus.OK);
     }
 }

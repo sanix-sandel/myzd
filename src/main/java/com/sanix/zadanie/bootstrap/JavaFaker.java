@@ -3,6 +3,8 @@ package com.sanix.zadanie.bootstrap;
 import com.github.javafaker.Faker;
 import com.sanix.zadanie.models.Person;
 import com.sanix.zadanie.repository.PersonRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,8 +20,13 @@ public class JavaFaker extends DataGenerator{
                     faker.random().nextInt(1000, 4000),
                     faker.date().birthday()
             );
-            System.out.println(person);
-            personRepository.save(person);
+            try{
+                personRepository.save(person);
+                logger.info(person+"generated and saved");
+            }catch(Exception e){
+                logger.info("Invalid entity");
+            }
+
         }
     }
 }

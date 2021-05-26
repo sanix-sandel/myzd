@@ -20,7 +20,12 @@ public class DFactory extends DataGenerator{
                     dataFactory.getNumberUpTo(4000),
                     dataFactory.getDate(1980, 1, 1)
             );
-            personRepository.save(person);
+            try{
+                personRepository.save(person);
+                logger.info(person+"generated and saved");
+            }catch(Exception e){
+                logger.info("Invalid entity");
+            }
         }
     }
 }
