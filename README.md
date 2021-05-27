@@ -1,6 +1,6 @@
 # myzd
 
 To launch:
-    -  Docker-compose up 
+    -  docker-compose up 
     or ./launch.sh
     
