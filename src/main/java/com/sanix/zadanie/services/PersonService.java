@@ -17,7 +17,7 @@ public interface PersonService {
     List<Person>getUsers();
     Person findById(Long id);
 
-    void deleteOne(Long Id);
+    void deleteOne(String name);
     void deleteAll();
     void deleteByRange(int limit);
     Page<Person> findPaginated(int pageNo, int pageSize);

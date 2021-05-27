@@ -1,26 +1,24 @@
 version: '3'
 
 services:
-#
-#  frontend:
-#    build:
-#      context: .
-#      dockerfile: ./frontapp/Dockerfile
-#    command: npm run serve
-#    ports:
-#      - 8080:8080
-#    depends_on:
-#      - app
 
-  db:
+  frontend:
     build:
       context: .
-      dockerfile: ./db/Dockerfile
+      dockerfile: ./frontapp/Dockerfile
+    command: npm run serve
+    ports:
+      - 8080:8080
+    depends_on:
+      - app
+
+  db:
+    image: postgres:latest
     restart: unless-stopped
     environment:
-      - POSTGRES_USER=user
-      - POSTGRES_PASSWORD=1234user
-      - POSTGRES_DB=compose-postgres
+      - POSTGRES_USER=${POSTGRES_DATABASE_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_DATABASE_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DATABASE_NAME}
     ports:
       - "5432:5432"
     volumes:
@@ -30,10 +28,10 @@ services:
     build: .
     working_dir: /app
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/compose-postgres
-      - SPRING_DATASOURCE_USERNAME=user
-      - SPRING_DATASOURCE_PASSWORD=1234user
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+     - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/compose-postgres
+     - SPRING_DATASOURCE_USERNAME=${POSTGRES_DATABASE_USER}
+     - SPRING_DATASOURCE_PASSWORD=${POSTGRES_DATABASE_PASSWORD}
+     - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     volumes:
       - .:/app
     ports:

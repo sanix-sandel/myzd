@@ -2,8 +2,10 @@ package com.sanix.zadanie;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
+@EnableSwagger2
 public class ZadanieApplication {
 
 	public static void main(String[] args) {
@@ -11,16 +13,3 @@ public class ZadanieApplication {
 	}
 
 }
-/*
-
-spring.data.mongodb.database=test
-spring.data.mongodb.port=27017
-spring.data.mongodb.host=mongodb
-spring.data.mongodb.username=root
-spring.data.mongodb.password=12345678
-spring.data.mongodb.gridFsDatabase=test
-spring.data.mongodb.repositories.enabled=true
-
-org.springframework.web.filter.CommonsRequestLoggingFilter=DEBUG
-
- */

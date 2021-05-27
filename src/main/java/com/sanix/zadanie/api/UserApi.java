@@ -1,9 +1,7 @@
 package com.sanix.zadanie.api;
 
-import com.github.javafaker.Faker;
 import com.sanix.zadanie.models.Person;
 import com.sanix.zadanie.services.PersonService;
-import io.swagger.models.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +21,8 @@ public class UserApi {
     }
 
 
-    @GetMapping("{n}")
+    @GetMapping
+    @RequestMapping("/generate/{n}")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity addUsers(@PathVariable("n") int n){
         personService.addUsers(n);
@@ -50,14 +49,16 @@ public class UserApi {
         return personService.findPaginated(pageNo, pageSize);
     }
 
-    @DeleteMapping("{Id}")
+    @DeleteMapping
+    @RequestMapping("/deleteone/{name}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity deleteUser(@PathVariable("Id")Long Id){
-        personService.deleteOne(Id);
+    public ResponseEntity deleteUser(@PathVariable("name")String name){
+        personService.deleteOne(name);
         return new ResponseEntity("User deleted successfully", HttpStatus.OK);
     }
 
-    @DeleteMapping("delete/all/")
+    @DeleteMapping
+    @RequestMapping("/delete/all/")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity deleteAllUsers(){
         personService.deleteAll();
@@ -65,7 +66,7 @@ public class UserApi {
     }
 
     @DeleteMapping
-    @RequestMapping("delete/{n}")
+    @RequestMapping("/delete/{n}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity deleteByRange(@PathVariable("n")int n){
 

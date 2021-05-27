@@ -3,6 +3,7 @@ package com.sanix.zadanie.services;
 import com.github.javafaker.Faker;
 import com.sanix.zadanie.bootstrap.DFactory;
 import com.sanix.zadanie.bootstrap.DataGenerator;
+import com.sanix.zadanie.bootstrap.FakeData;
 import com.sanix.zadanie.bootstrap.JavaFaker;
 import com.sanix.zadanie.exceptions.PersonNotFoundException;
 import com.sanix.zadanie.models.Person;
@@ -40,7 +41,7 @@ public class PersonServiceImpl implements PersonService{
     @Override
     public void addUsers(int n) {
 
-        DataGenerator fk=new JavaFaker();
+        FakeData fk=new JavaFaker();
         fk.generateData(n, personRepository);
     }
 
@@ -78,8 +79,8 @@ public class PersonServiceImpl implements PersonService{
     }
 
     @Override
-    public void deleteOne(Long Id) {
-        Optional<Person> personOptional=personRepository.findById(Id);
+    public void deleteOne(String name) {
+        Optional<Person> personOptional=personRepository.findByName(name);
 
         if (!personOptional.isPresent()){
             throw new PersonNotFoundException("user not found");
@@ -101,7 +102,8 @@ public class PersonServiceImpl implements PersonService{
         Page<Person>page=personRepository.findAll(
                 PageRequest.of(0, limit)
         );
-        page.stream().iterator().forEachRemaining(personRepository::delete);
+        personRepository.deleteAll(page);
+        logger.info(limit+" users deleted");
 
     }
 
